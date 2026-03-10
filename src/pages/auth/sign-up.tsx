@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -46,7 +45,7 @@ export function SignUp() {
 
   return (
     <div>
-      <Helmet title="Cadastro" />
+      <title>Cadastro | pizza.shop</title>
       <div className="p-8">
         <Button variant={'ghost'} asChild className="absolute top-4 right-4">
           <Link to="/sign-in">Fazer login</Link>
