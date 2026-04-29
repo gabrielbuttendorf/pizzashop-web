@@ -1,5 +1,14 @@
 import { BarChart } from 'lucide-react'
-import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
+import {
+  Label,
+  LabelList,
+  type LabelProps,
+  Pie,
+  PieChart,
+  type PieSectorShapeProps,
+  ResponsiveContainer,
+  Sector,
+} from 'recharts'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -20,6 +29,28 @@ const COLORS = [
   colors.emerald[500],
   colors.rose[500],
 ]
+
+const pieShapeColors = (props: PieSectorShapeProps) => (
+  <Sector
+    {...props}
+    fill={COLORS[props.index]}
+    className="hover:opacity-80 dark:stroke-zinc-900"
+  />
+)
+
+const pieLabels = (props: LabelProps & { index?: number }) => {
+  const item = data[props.index ?? 0]
+
+  return (
+  <Label
+    {...props}
+    value={`${item.product}: ${item.amount}`}
+    fill={COLORS[(props.index ?? 0) % COLORS.length]}
+    position="outside"
+    offset={10}
+  />
+)
+}
 
 export function PopularProductsChart() {
   return (
@@ -44,12 +75,9 @@ export function PopularProductsChart() {
               outerRadius={86}
               innerRadius={64}
               strokeWidth={8}
+              shape={pieShapeColors}
             >
-              {data.map((_, index) => {
-                return (
-                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                )
-              })}
+              <LabelList content={pieLabels} />
             </Pie>
           </PieChart>
         </ResponsiveContainer>
